@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
-import serverutils
+import tus
 
 users = {
     'admin@example.it': {
         'uid': 1,
         'token': "123456789abc123456789abc123456789abc",
-        'auths': {serverutils.AUTH_ADMIN},
+        'roles': {tus.AUTH_ADMIN},
         'password': "123"
     },
     'power@example.it': {
         'uid': 2,
         'token': "789abc123456789abc123456789abc123456",
-        'auths': {serverutils.AUTH_POWER},
+        'roles': {tus.AUTH_POWER},
         'password': "456"
     },
     'user@example.it': {
         'uid': 2,
         'token': "c12345656789ab789abc123456789abc1234",
-        'auths': set(),
+        'roles': set(),
         'password': "789"
     },
 }

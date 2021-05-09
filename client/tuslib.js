@@ -5,13 +5,14 @@ Two main namespaces "tuslib" and "fun" are declared.
 
 In "fun" there are support functions and should not be called directly.
 
-In “tuslib” there are the three main methods:
+In "tuslib" there are this main methods:
  - login
  - logout
  - request
 
-In particular, the "request" method allows to delegate the logics of signing requests
+The "request" method allows to delegate the logics of signing requests
 once the "login" has been performed.
+
 The "apiEndpoint" property defines in "tuslib" must be customized
 with the URI of the server delegated to handle requests.
 
@@ -20,9 +21,9 @@ Using this interface it is therefore possible to make calls to the server in a v
     - the path of the uri
     - a dictionary of properties-value
 
-At the end "request" method call two distinct callbacks.
- - onSuccess callback receives a JSON with the server's response,
- - onError receives a string with the error description.
+At the end "request" method call one of this two distinct callbacks.
+ - onSuccess: receives a JSON with the server's response,
+ - onError: receives a string with the error description.
 
 */
 
@@ -59,9 +60,9 @@ const tuslib = {
      * @param {String} path - Path of url to call stars with "/"
      * @param {Object} [data] - Dictionary of property: value to send to the server
      * @param {function({Object})} [onSuccess] - Called if request is executed with success,
-     *                                           It recives the Data Object sended by the server
+     *  It recives the Data Object sended by the server
      * @param {function(string)} [onError] - Called if request fails.
-     *                                       It recives an string with occurred error.
+     *  It recives an string with occurred error.
      */
     request: (path, data, onSuccess, onError) => {
         if (tuslib.uid){
@@ -91,7 +92,7 @@ const tuslib = {
                             }
                             onError(error);
                         } catch (e) {
-                            onError("Ops" + e);
+                            onError("Ops, " + e);
                         }
                     }
                 },
