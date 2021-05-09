@@ -18,7 +18,7 @@ on the underlying architecture which cannot and should not be binding.
 The scope of use is very broad, however it is particularly useful in handling
 calls to the methods of an API.
 
-![Schema](https://raw.githubusercontent.com/Amecom/tus/master/schema.png)
+![Schema](https://raw.githubusercontent.com/Amecom/TUS/master/schema.png)
 
 ## CLIENT - JAVASCRIPT
 
