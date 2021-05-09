@@ -23,7 +23,7 @@ def _example_response(params, uid, auths):
     :param auths: Set of User Id roles
     :return:
     """
-    return tus.send_json_response({
+    return tus.send_response({
         'recived_params': params,
         'recived_uid': uid,
         'uid_auths': auths
@@ -56,11 +56,11 @@ def login():
     email = params['email']
     user = userdata.users.get(email)
     if user and params['password'] == user['password']:
-        return tus.send_json_response({
+        return tus.send_response({
             'user_id': user['uid'],
             'signature': user['token']
         })
-    return tus.send_json_error("Login error", 500)
+    return tus.send_error("Login error")
 
 
 """
@@ -68,9 +68,9 @@ EXAMPLES OF ROUTES PROTECTED BY TUS Decorator
 """
 
 
-@app.route('/get_user_data', methods=["POST"])
+@app.route('/execute_if_valid_signature', methods=["POST"])
 @tus.tus
-def get_user_data(params, uid, auths):
+def execute_if_valid_signature(params, uid, auths):
     """
     Adding "tus" decorator without arguments the function will be executed
     if the signature applied to the request is valid, with no other checks.

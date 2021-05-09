@@ -3,17 +3,16 @@
 
 Author: Amedeo Celletti (info@amecom.it)
 """
-from functools import wraps
-from flask import request
-from time import mktime
-from datetime import datetime,  timezone
-
 import flask
 import hashlib
 import json
 
 # user data used the manage login end roles
 import userdata
+
+from functools import wraps
+from time import mktime
+from datetime import datetime, timezone
 
 
 # It allows to manage time inconsistencies
@@ -49,30 +48,31 @@ def tus(original_function=None, *, auths=None):
 
             payload = flask.request.get_data().decode("utf-8")
             rf = flask.request.form
+            ra = flask.request.args
 
             # T.ime
             t = rf["t"]
             # U.ser id
             u = int(rf["u"])
             # S.ignature
-            s = request.args["s"]
+            s = ra["s"]
 
             # deve esserci sempre un json magari
             # e deve essere sempre un dizionario, magari vuoto {}
-            data = json.loads(request.form.get("json"))
+            data = json.loads(rf.get("json"))
 
             if abs(get_minutes_diff_from_now_and_stamp(t)) > MAX_MINUTES_TIME_INCONSISTENCY:
-                return send_json_error("Time inconsistency", 428)
+                return send_error("Time inconsistency", 428)
 
             user_token = get_token_by_signature(u, payload, s)
 
             if not user_token:
-                return send_json_error("Precondition fails", 428)
+                return send_error("Precondition fails", 428)
 
             user_roles = get_user_roles(u)
 
             if auths and not has_any_auth(user_roles, auths):
-                return send_json_error("Not allowed for user role", 401)
+                return send_error("Not allowed for user role", 401)
 
             return view(data, u, user_roles, *args, **kwargs)
 
@@ -83,21 +83,17 @@ def tus(original_function=None, *, auths=None):
     return _decorate
 
 
-def send_json_response(obj, status=200):
+def send_response(obj, status=200):
     """
     All server response must be on Object with data returned by server route
     :param obj: Server response
     :param status: HTTP status code
     :return:
     """
-    return flask.Response(
-        json.dumps(obj),
-        status=status,
-        mimetype='application/json'
-    )
+    return flask.Response(json.dumps(obj), status=status, mimetype='application/json')
 
 
-def send_json_error(message=None, status=500):
+def send_error(message=None, status=500):
     """
     Default error response if client can not perform action on server,
     :param message: String of Error description
@@ -105,8 +101,8 @@ def send_json_error(message=None, status=500):
     :return:
     """
     if message is None:
-        message = "Unknow error"
-    return send_json_response({"error": message}, status)
+        message = "Undefined error"
+    return send_response({"error": message}, status)
 
 
 # PSEUDO FUNCTIONS
