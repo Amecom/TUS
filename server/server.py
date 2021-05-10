@@ -93,7 +93,6 @@ def execute_if_admin(params, uid, auths):
 @tus.tus(auths={tus.AUTH_ADMIN, tus.AUTH_POWER})
 def execute_if_any_roles(params, uid, auths):
     """
-    In this example the route access is allowed if user has "ADMIN" or "POWER" role.
     The function will be executed if the signature applied to the request is valid,
     and the user has "admin" OR "power" role.
     """
@@ -102,7 +101,7 @@ def execute_if_any_roles(params, uid, auths):
 
 @app.route('/execute_arg/<arg>', methods=["POST"])
 @tus.tus(auths={tus.AUTH_ADMIN, tus.AUTH_POWER})
-def execute_if_any_roles(params, uid, auths, arg):
+def execute_arg(params, uid, auths, arg):
     """
     In this example the route access is allowed if user has "ADMIN" or "POWER" role.
     Compared to the previous example,
