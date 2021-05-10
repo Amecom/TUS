@@ -22,26 +22,27 @@ calls to the methods of an API.
 
 ## CLIENT - JAVASCRIPT
 
-The file "tuslib.js" defines two objects "tuslib" and "fun".
+The file "client/tuslib.js" defines two objects "tuslib" and "fun".
 
 * "tuslib" contains the three main methods: login, logout and request.
 * "fun" contains helper functions which should not be called directly.
 
-The "request" method in "tuslib" allows to delegate
+The "request" method in "tuslib" delegates
 the logics of signing requests once a user has logged in.
 
-This interface allows making server calls in a very way by passing as parameters:
+This interface allows making server calls in a very simple way
+by passing as parameters:
 
 - the path of the endpoint to call
-- a dictionary of {properties: value} (data to be sent to the server)
-- onSuccess: callback executed on success that recives an object with
+- a dictionary of {properties: value} to sent to the server
+- onSuccess function: callback executed on success that recives an object with
   data returned from the server
-- onError: callback executed if an error occurred, that receives a
+- onError function: callback executed if an error occurred, that receives a
   string with the description error.
   
 ## SERVER - PYTHON / FLASK
 
-On the server side you just need the wrap function
-with the "tus" function of the "tus.py" file
+On the server side you just need the wrap a route function
+with the "tus" function of the "server/tus.py" file
 
 More information can be found in the files.
